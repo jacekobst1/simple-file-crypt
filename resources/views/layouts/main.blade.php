@@ -7,6 +7,19 @@
         <title>{{ env('APP_NAME') }}</title>
     </head>
     <body class="container">
-        @yield('content')
+        <div>
+            @if ($errors->any())
+                <div class="alert alert-danger my-5">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+        <div>
+            @yield('content')
+        </div>
     </body>
 </html>

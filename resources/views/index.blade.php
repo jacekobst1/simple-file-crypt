@@ -11,9 +11,6 @@
                 {!! Form::label('file', 'File to encrypt:') !!}
                 {!! Form::file('file') !!}
                 <div class="py-2"></div>
-                {!! Form::label('password', 'Password to encrypt file:') !!}
-                {!! Form::text('password') !!}
-                <div class="py-2"></div>
                 <hr />
                 {!! Form::submit('Encrypt and download') !!}
 
@@ -28,9 +25,6 @@
             <div class="py-2"></div>
             {!! Form::label('file', 'File to decrypt:') !!}
             {!! Form::file('file') !!}
-            <div class="py-2"></div>
-            {!! Form::label('password', 'Password of encrypted file:') !!}
-            {!! Form::text('password') !!}
             <div class="py-2"></div>
             <hr />
             {!! Form::submit('Decrypt and download') !!}

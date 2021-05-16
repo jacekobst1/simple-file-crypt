@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Services\FileService;
 use App\Services\ViewService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MainController extends Controller
 {
@@ -16,10 +18,17 @@ class MainController extends Controller
 
     public function encrypt(
         FileService $fileService,
-        ViewService $viewService,
         Request $request
-    ): View
+    ): StreamedResponse
     {
-        return $fileService->encrypt($request->all());
+        return $fileService->encrypt($request->allFiles());
+    }
+
+    public function decrypt(
+        FileService $fileService,
+        Request $request
+    ): StreamedResponse|RedirectResponse
+    {
+        return $fileService->decrypt($request->allFiles());
     }
 }
