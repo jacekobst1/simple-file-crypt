@@ -6,10 +6,11 @@ use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class CryptService
+class FileService
 {
-    public function encryptFile(array $files): string|RedirectResponse
+    public function encrypt(array $files): StreamedResponse
     {
         Validator::make($files, [
             'file' => 'required|mimes:txt',
@@ -23,10 +24,13 @@ class CryptService
             ]);
         }
 
-        return $encryptedText;
+        return response()->streamDownload(
+            fn() => $this->echoText($encryptedText),
+            'encrypted_file'
+        );
     }
 
-    public function decryptFile(array $files): string|RedirectResponse
+    public function decrypt(array $files): StreamedResponse|RedirectResponse
     {
         Validator::make($files, [
             'file' => 'required|mimes:txt',
@@ -40,6 +44,15 @@ class CryptService
             ]);
         }
 
-        return $decryptedText;
+
+        return response()->streamDownload(
+            fn() => $this->echoText($decryptedText),
+            'decrypted_file'
+        );
+    }
+
+    private function echoText(string $text): void
+    {
+        echo $text;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CryptService;
+use App\Services\FileService;
 use App\Services\ViewService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,28 +17,18 @@ class MainController extends Controller
     }
 
     public function encrypt(
-        CryptService $cryptService,
+        FileService $fileService,
         Request $request
     ): StreamedResponse
     {
-        return response()->streamDownload(
-            function() use($cryptService, $request) {
-                echo $cryptService->encryptFile($request->allFiles());
-            },
-            $request->file('file')->getClientOriginalName() . '_encrypted'
-        );
+        return $fileService->encrypt($request->allFiles());
     }
 
     public function decrypt(
-        CryptService $cryptService,
+        FileService $fileService,
         Request $request
     ): StreamedResponse|RedirectResponse
     {
-        return response()->streamDownload(
-            function() use($cryptService, $request) {
-                echo $cryptService->decryptFile($request->allFiles());
-            },
-            $request->file('file')->getClientOriginalName() . '_decrypted'
-        );
+        return $fileService->decrypt($request->allFiles());
     }
 }
