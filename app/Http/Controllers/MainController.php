@@ -21,7 +21,7 @@ class MainController extends Controller
         Request $request
     ): StreamedResponse
     {
-        return $fileService->encrypt($request->allFiles());
+        return $fileService->encrypt($request->input(), $request->allFiles());
     }
 
     public function decrypt(
@@ -29,6 +29,6 @@ class MainController extends Controller
         Request $request
     ): StreamedResponse|RedirectResponse
     {
-        return $fileService->decrypt($request->allFiles());
+        return $fileService->decrypt($request->input(), $request->allFiles());
     }
 }
